@@ -1,142 +1,154 @@
-// fetch-movies.js
-import axios from 'axios';
 import { optionsIMDB } from './api/imdb-api';
-import { findGenresOfMovie } from './find-genre';
+import { paginationFetch } from './pagination-fetch';
+import { renderFetchMoviesCard } from './render-fetch-movies-card';
+import axios from 'axios';
 
 const libraryFetchEl = document.querySelector('.gallery');
-const paginationItemsFetchContainer = document.querySelector('.pagination-fetch_container');
+const librarySearchEl = document.querySelector('.gallery_search-box');
+
+const paginationItemsFetchContainer = document.querySelector(
+  '.pagination-fetch_container'
+);
+const paginationItemsSearchContainer = document.querySelector(
+  '.pagination-search_container'
+);
 
 let BASE_URL = optionsIMDB.specs.baseURL;
 let API_KEY = optionsIMDB.specs.key;
 let page = 1;
-let totalPages = 0;
+
+//export { fetchMovies };
 
 async function fetchMovies() {
+  paginationItemsFetchContainer.classList.remove('is-hidden');
+  paginationItemsSearchContainer.classList.add('is-hidden');
   try {
-    const res = await axios.get(`${BASE_URL}/3/trending/movie/day?api_key=${API_KEY}&page=${page}`);
+    const res = await axios.get(
+      `${BASE_URL}/3/trending/movie/day?api_key=${API_KEY}&page=${page}`
+    );
 
+    libraryFetchEl.innerHTML = '';
     clearGalleryMarkup();
+
+    console.log(`Fetch Movies`);
+    console.log(res);
     renderFetchMoviesCard(res.data.results);
 
     page = optionsIMDB.specs.page;
-    totalPages = res.data.total_pages;
 
-    setupPagination();
+    optionsIMDB.specs.totalPages = res.data.total_pages;
+    totalPages = optionsIMDB.specs.totalPages;
+
+    paginationItemsFetchContainer.addEventListener(
+      'click',
+      onFetchPaginationClick
+    );
+    paginationFetch(page, totalPages);
 
     return res;
   } catch (error) {
-    console.log('Error fetching movies:', error);
+    console.log(error);
   }
+}
+
+async function onFetchPaginationClick({ target }) {
+  console.log(`Fetch Movies | Pagination`);
+
+  let fetchStatus = 0;
+
+  if (
+    target.classList.contains('btn-left') &&
+    !target.classList.contains('disabled')
+  ) {
+    fetchStatus = 1;
+  }
+
+  if (
+    target.classList.contains('btn-right') &&
+    !target.classList.contains('disabled')
+  ) {
+    fetchStatus = 2;
+  }
+
+  console.log(
+    `Fetch Movies | Pagination | Target ClassList${target.classList}`
+  );
+
+  console.log(`Fetch Movies | Pagination | Fetch Status:${fetchStatus}`);
+
+  if (!fetchStatus) {
+    if (target.nodeName === 'UL' || target.classList.contains('disabled')) {
+      return;
+    }
+
+    if (isNaN(Number(target.textContent)) && fetchStatus != 0) {
+    } else if (isNaN(Number(target.textContent))) {
+      return;
+    }
+
+    if (Number(target.textContent) === optionsIMDB.specs.page) {
+      return;
+    }
+  }
+
+  console.log(`Fetch Movies | Pagination | Fetch Status:${fetchStatus}`);
+
+  switch (fetchStatus) {
+    case 0:
+      optionsIMDB.specs.page = Number(target.textContent);
+      break;
+    case 1:
+      optionsIMDB.specs.page--;
+      break;
+    case 2:
+      optionsIMDB.specs.page++;
+      break;
+  }
+
+  globalCurrentPage = optionsIMDB.specs.page;
+
+  let BASE_URL = optionsIMDB.specs.baseURL;
+  let API_KEY = optionsIMDB.specs.key;
+  let query = optionsIMDB.specs.query;
+  let page = optionsIMDB.specs.page;
+
+  console.log(optionsIMDB.specs);
+
+  try {
+    const res = await axios.get(
+      `${BASE_URL}/3/trending/movie/day?api_key=${API_KEY}&page=${page}`
+    );
+
+    clearGalleryMarkup();
+
+    console.log(`Fetch Movies | Pagination | Fetch res`);
+    console.log(res.data.results);
+
+    renderFetchMoviesCard(res.data.results);
+    //optionsIMDB.specs.totalPages = res.data.total_pages;
+    totalPages = optionsIMDB.specs.totalPages;
+
+    console.log(optionsIMDB.specs);
+
+    console.log(totalPages);
+    paginationFetch(page, totalPages);
+
+    return res;
+  } catch (err) {
+    console.log('ERROR: ', err.message);
+    console.log('ERROR CODE: ', err.code);
+  }
+
+  paginationItemsFetchContainer.addEventListener(
+    'click',
+    onFetchPaginationClick
+  );
+  paginationFetch(optionsIMDB.specs.page, optionsIMDB.specs.totalPages);
 }
 
 function clearGalleryMarkup() {
-  if (libraryFetchEl) {
-    libraryFetchEl.innerHTML = '';
-  }
+  libraryFetchEl.innerHTML = '';
+  //librarySearchEl.innerHTML = '';
 }
 
-function setupPagination() {
-  paginationItemsFetchContainer.innerHTML = generatePaginationMarkup(page, totalPages);
-  paginationItemsFetchContainer.addEventListener('click', onFetchPaginationClick);
-}
-
-function generatePaginationMarkup(currentPage, totalPages) {
-  let markup = '';
-
-  const generatePageButton = page => `<li class="pagination-btn ${page === currentPage ? 'current' : ''}">${page}</li>`;
-  
-  const addPageButton = page => {
-    markup += generatePageButton(page);
-  };
-
-  const addEllipsis = () => {
-    markup += '<li class="pagination-btn">...</li>';
-  };
-
-  const addPrevButton = () => {
-    markup += currentPage > 1 ? '<li class="pagination-btn btn-left">&#129144;</li>' : '<li class="pagination-btn btn-left disabled" disabled>&#129144;</li>';
-  };
-
-  const addNextButton = () => {
-    markup += totalPages > currentPage ? '<li class="pagination-btn btn-right">&#129146;</li>' : '<li class="pagination-btn btn-right disabled">&#129146;</li>';
-  };
-
-  const addFirstPageButton = () => {
-    if (currentPage > 3) {
-      addPageButton(1);
-    }
-  };
-
-  const addLastPageButton = () => {
-    if (totalPages - currentPage > 2) {
-      addPageButton(totalPages);
-    }
-  };
-
-  addPrevButton();
-  addFirstPageButton();
-
-  for (let i = Math.max(1, currentPage - 2); i <= Math.min(totalPages, currentPage + 2); i++) {
-    addPageButton(i);
-  }
-
-  addLastPageButton();
-  addNextButton();
-
-  paginationContainer.innerHTML = markup;
-}
-
-async function onFetchPaginationClick(event) {
-  const target = event.target;
-
-  // Check if the clicked element is a pagination button
-  if (!target.classList.contains('pagination-btn')) {
-    return;
-  }
-
-  // Determine the fetch status based on the clicked button
-  let fetchStatus = 0; // Default status for page number change
-  if (target.classList.contains('btn-left')) {
-    fetchStatus = -1; // Previous page
-  } else if (target.classList.contains('btn-right')) {
-    fetchStatus = 1; // Next page
-  }
-
-  // Update the current page number based on the fetch status
-  switch (fetchStatus) {
-    case -1: // Previous page
-      optionsIMDB.specs.page--;
-      break;
-    case 1: // Next page
-      optionsIMDB.specs.page++;
-      break;
-    default: // Page number change
-      optionsIMDB.specs.page = parseInt(target.textContent);
-      break;
-  }
-
-  // Fetch movies for the updated page
-  await fetchMovies();
-}
-
-function renderFetchMoviesCard(movies) {
-  console.log('Rendering movies:', movies); // Debugging
-  const markup = movies.map(movie => {
-    const { poster_path, title, genre_ids, release_date, id } = movie;
-    const date = new Date(release_date).getFullYear();
-    const poster = poster_path ? `https://image.tmdb.org/t/p/w400${poster_path}` : img;
-    const genresString = findGenresOfMovie(genre_ids).slice(0, 2).join(', ') + (genre_ids.length > 2 ? ', Other' : '');
-
-    return `
-      <div class="card" id="${id}">
-        <img class="card_img" src="${poster}" alt="${title}" />
-        <p class="card_title">${title} <br />
-          <span class="card_text">${genresString} | ${date}</span>
-        </p>
-      </div>`;
-  }).join('');
-  console.log('Generated markup:', markup); // Debugging
-  libraryFetchEl.insertAdjacentHTML('beforeend', markup);
-}
-
-export { fetchMovies, renderFetchMoviesCard };
+fetchMovies();

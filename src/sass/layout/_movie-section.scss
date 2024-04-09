@@ -1,32 +1,83 @@
-:root {
-    --timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    --animation-duration: 250ms;
+.gallery-fetch {
+  padding: 20px 0 40px 0;
+  @media screen and (min-width: $tablet) {
+    padding: 60px 0;
   }
-  
-  .gallery {
-    display: grid;
-    max-width: 1140px;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    grid-auto-rows: 240px;
-    grid-gap: 12px;
-    justify-content: center;
-    margin-left: auto;
-    margin-right: auto;
+}
+.gallery-fetch_container {
+  margin-right: auto;
+  margin-left: auto;
+  margin-bottom: 40px;
+
+  padding: 0 20px;
+  width: 320px;
+
+  @media screen and (min-width: $tablet) {
+    width: 768px;
+    margin-bottom: 60px;
   }
-  
-  .gallery__item {
-    position: relative;
-    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2),
-      0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
+
+  @media screen and (min-width: $desktop) {
+    width: 1280px;
+    padding: 0 32px;
   }
-  
-  .gallery__image:hover {
-    transform: scale(1.03);
+}
+.gallery {
+  padding: 0;
+  margin: 0;
+
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -16px;
+  margin-top: -32px;
+}
+.card {
+  margin-top: 32px;
+  margin-left: 15px;
+  width: 100%;
+  cursor: pointer;
+  @media screen and (min-width: $tablet) {
+    flex-basis: calc(100% / 2 - 16px);
   }
-  
-  .gallery__image {
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-    transition: transform var(--animation-duration) var(--timing-function);
+  @media screen and (min-width: $desktop) {
+    flex-basis: calc(100% / 3 - 16px);
   }
+}
+.card_img {
+  width: 280px;
+  height: 398px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+
+  @media screen and (min-width: $tablet) {
+    width: 336px;
+    height: 455px;
+    margin-bottom: 8px;
+  }
+
+  @media screen and (min-width: $desktop) {
+    width: 395px;
+    height: 574px;
+    margin-bottom: 12px;
+  }
+}
+.card_title {
+  display: inline;
+  position: relative;
+
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.33;
+
+  color: $black;
+  text-transform: uppercase;
+
+  @media screen and (min-width: $desktop) {
+    font-size: 20px;
+    line-height: 1.2;
+  }
+}
+.card_text {
+  color: $orange;
+  text-transform: none;
+}
