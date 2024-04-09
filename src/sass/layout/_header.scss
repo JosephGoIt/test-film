@@ -1,0 +1,219 @@
+.page-header {
+    position: absolute;
+    width: 100%;
+    top: 40;
+    z-index: 1;
+  }
+  
+  .header-container {
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 20px;
+    padding-left: 20px;
+    @media screen and (min-width: $mobile) and (max-width: 767px) {
+      width: 320px;
+    }
+    @media screen and (min-width: $tablet) {
+      width: 768px;
+      padding-right: 32px;
+      padding-left: 32px;
+    }
+    @media screen and (min-width: $desktop) {
+      width: 1280px;
+    }
+  }
+  
+  .header-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .logo {
+    display: flex;
+    align-items: center;
+    color: $white;
+    font-family: 'Roboto';
+    font-weight: 500;
+    font-size: 30px;
+    line-height: 1.16;
+  }
+  
+  .logo-svg {
+    margin-right: 8px;
+  }
+  
+  .logo-text {
+    @media screen and (max-width: 767px) {
+      display: none;
+    }
+  }
+  
+  .nav-list {
+    display: flex;
+    align-items: center;
+  }
+  
+  .nav-list-item {
+    position: relative;
+    &:not(:last-child) {
+      margin-right: 40px;
+    }
+  
+    .current::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -3;
+      width: 100%;
+      height: 3px;
+      background-color: $red;
+    }
+  }
+  
+  .nav-list-link {
+    color: $white;
+    font-family: 'Roboto';
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 1.16;
+    text-transform: uppercase;
+  
+    &:hover,
+    &:focus {
+      color: $red;
+    }
+  }
+
+  .hero {
+    height: 230px;
+    background-image: url(../images/mobile/background_homepage_mobile.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    opacity: 0.9;
+    @media (min-device-pixel-ratio: 2),
+      (min-resolution: 192dpi),
+      (min-resolution: 2dppx) {
+      background-image: url(../images/mobile/background_homepage_mobile-2x.jpg);
+    }
+    @media screen and (min-width: $tablet) {
+      background-image: url(../images/tablet/background_homepage_tablet.jpg);
+      @media (min-device-pixel-ratio: 2),
+        (min-resolution: 192dpi),
+        (min-resolution: 2dppx) {
+        background-image: url(../images/tablet/background_homepage_tablet-2x.jpg);
+      }
+    }
+    @media screen and (min-width: $desktop) {
+      background-image: url(../images/desktop/background_homepage_desctop.jpg);
+      @media (min-device-pixel-ratio: 2),
+        (min-resolution: 192dpi),
+        (min-resolution: 2dppx) {
+        background-image: url(../images/desktop/background_homepage_desctop-2x.jpg);
+      }
+    }
+    @media screen and (min-width: $tablet) {
+      height: 216px;
+    }
+  }
+  
+  .input-field {
+    position: relative;
+    margin: 0 auto;
+    width: 280px;
+    @media screen and (min-width: $tablet) {
+      width: 336px;
+    }
+    @media screen and (min-width: $desktop) {
+      width: 394px;
+    }
+  }
+  
+  .text-input {
+    margin-top: 118px;
+    width: 100%;
+    outline: none;
+    border: transparent;
+    border-bottom: 0.5px solid #ffffff;
+    background-color: transparent;
+    color: $white;
+    font-family: 'Roboto';
+    font-size: 14px;
+    line-height: 1.14;
+  
+    &::placeholder {
+      color: $white;
+      font-family: 'Roboto';
+      font-size: 14px;
+      line-height: 1.14;
+    }
+  }
+  
+  .search-button {
+    position: absolute;
+    top: 118;
+    right: 0;
+    width: 12px;
+    height: 12px;
+  }
+  
+  .library-hero {
+    height: 230px;
+    background-color: rgba(0, 0, 0, 0.56);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
+      url(../images/mobile/background_my-library_mobile.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    @media (min-device-pixel-ratio: 2),
+      (min-resolution: 192dpi),
+      (min-resolution: 2dppx) {
+      background-image: url(../images/mobile/background_my-library_mobile-2x.jpg);
+    }
+    @media screen and (min-width: $tablet) {
+      background-image: url(../images/tablet/background_my-library_tablet.jpg);
+      @media (min-device-pixel-ratio: 2),
+        (min-resolution: 192dpi),
+        (min-resolution: 2dppx) {
+        background-image: url(../images/tablet/background_my-library_tablet-2x.jpg);
+      }
+    }
+    @media screen and (min-width: $desktop) {
+      background-image: url(../images/desktop/background_my-library_desctop.jpg);
+      @media (min-device-pixel-ratio: 2),
+        (min-resolution: 192dpi),
+        (min-resolution: 2dppx) {
+        background-image: url(../images/desktop/background_my-library_desctop-2x.jpg);
+      }
+    }
+    @media screen and (min-width: $tablet) {
+      height: 216px;
+    }
+  }
+  
+  .library-list {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .library-item {
+    margin-top: 124px;
+  
+    @media screen and (min-width: $tablet) {
+      margin-top: 114px;
+    }
+  }
+  
+  .library-item:not(:last-child) {
+    margin-right: 20px;
+  
+    @media screen and (min-width: $tablet) {
+      margin-right: 32px;
+    }
+  
+    @media screen and (min-width: $desktop) {
+      margin-right: 16px;
+    }
+  }
+  
