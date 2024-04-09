@@ -1,0 +1,257 @@
+.disable-scroll {
+    overflow: hidden;
+  }
+  
+.modal {
+    position: fixed;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0px 20px;
+    background-color: rgba($color: black, $alpha: 25%);
+    opacity: 1;
+    overflow-y: auto;
+    transition-property: opacity;
+    transition-duration: 250ms;
+    transition-timing-function: ease;
+}
+  
+  .movie-card-modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background-color: $white;
+    padding: 48px 20px 40px 20px;
+    @media screen and (min-width: $tablet) {
+      flex-direction: row;
+      gap: 68px;
+      width: 704px;
+      padding: 40px 36px;
+    }
+    @media screen and (min-width: 1024px) {
+      gap: 16px;
+      width: 806px;
+      padding: 40px 12px;
+    }
+  }
+  
+  .film__image {
+    width: 100%;
+    border-radius: 5px;
+    object-fit: cover;
+    @media screen and (min-width: $tablet) {
+      max-width: 264px;
+      max-height: 396px;
+    }
+    @media screen and (min-width: 1024px) {
+      max-width: 375px;
+      max-height: 478px;
+    }
+  }
+  
+  .film__content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    @media screen and (min-width: $tablet) {
+      max-width: 264px;
+    }
+    @media screen and (min-width: 1024px) {
+      max-width: 390px;
+    }
+  }
+  
+  .film__title {
+    font-family: 'Roboto';
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 1.15;
+    color: $black;
+    text-transform: uppercase;
+    @media screen and (min-width: 1024px) {
+      font-size: 30px;
+      line-height: 1.16;
+    }
+  }
+  
+  .film-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .film-info__item {
+    display: flex;
+    gap: 40px;
+    @media screen and (min-width: 1024px) {
+      gap: 80px;
+    }
+  }
+  
+  .film-info__lable {
+    width: 70px;
+    font-family: 'Roboto';
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 1.3;
+    color: $grey;
+  }
+  
+  .film-info__text {
+    font-family: 'Roboto';
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 1.3;
+    color: $black;
+    &--uppercase {
+      text-transform: uppercase;
+    }
+  }
+  
+  .film-vote {
+    display: flex;
+    gap: 8px;
+  }
+  
+  .film-vote__lable {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 36px;
+    padding: 4px 6px;
+    background-color: $grey-light;
+    border-radius: 5px;
+    font-family: 'Roboto';
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 1.16;
+    text-align: center;
+    &--orange {
+      background-color: $orange;
+      color: $white;
+    }
+  }
+  
+  .film-description {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .film-description__title {
+    font-family: 'Roboto';
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 1.3;
+    color: $black;
+    text-transform: uppercase;
+  }
+  
+  .film-description__text {
+    font-family: 'Roboto';
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 1.6;
+  }
+  
+// Disable hover styles for disabled buttons
+button:disabled:hover,
+.film-button__primary:disabled:hover,
+.film-button__primary.is-disabled:hover {
+  background-color: rgb(180, 180, 180);
+  border: 1px solid rgb(180, 180, 180);
+  cursor: not-allowed;
+}
+
+button:disabled,
+.film-button__primary:disabled,
+.film-button__primary.is-disabled {
+  background-color: rgb(180, 180, 180);
+  border: 1px solid rgb(180, 180, 180);
+  cursor: not-allowed;
+}
+
+  .film-button {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+    @media screen and (min-width: $tablet) {
+      gap: 15px;
+    }
+  }
+  
+  .film-button__primary {
+    // @extend %button !optional;
+    box-sizing: border-box;
+    min-width: 110px;
+    min-height: 44px;
+    padding: 6px 10px;
+    border: 1px solid $black;
+    color: $black;
+    @media screen and (min-width: $tablet) {
+      min-width: 126px;
+    }
+    @media screen and (min-width: 1024px) {
+      min-width: 136px;
+    }
+    &:hover,
+    &:focus,
+    &--active {
+      color: $white;
+      background-color: $orange;
+      border-color: $orange;
+    }
+  }
+  
+  .button-close {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 30px;
+    height: 30px;
+    background-color: $white;
+    border-radius: 5px;
+    &:hover .icon-close,
+    &:focus .icon-close {
+      fill: $orange;
+    }
+  }
+  
+  .icon-close {
+    width: 14px;
+    height: 14px;
+    fill: $black;
+    transition-property: fill;
+    transition-duration: 250ms;
+    transition-timing-function: ease;
+  }
+  
+  .icon-close {
+    width: 14px;
+    height: 14px;
+  
+    fill: $black;
+  
+    transition-property: fill;
+    transition-duration: 250ms;
+    transition-timing-function: ease;
+  }
+  
+  .is-disabled {
+    background-color: rgb(180, 180, 180);
+    color: white;
+    border: 1px solid rgb(180, 180, 180);
+  }
+  
+  .is-disabled:hover {
+    background-color: rgb(180, 180, 180);
+    border: 1px solid rgb(180, 180, 180);
+  }
