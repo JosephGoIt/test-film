@@ -92,7 +92,7 @@ function createFilmModalMarkup(data) {
   } = data;
   const posterUrl = `https://image.tmdb.org/t/p/w500${poster_path}`;
   return `
-    <div class="movie-card-modal">
+    <div class="film-modal">
       <button class="button-close" type="button" button-modal-close>
         <svg class="icon-close">
           <use href="${closeBtnIcon}#icon-close"></use>

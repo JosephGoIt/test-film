@@ -3,7 +3,7 @@ import { paginationFetch } from './pagination-fetch';
 import { renderFetchMoviesCard } from './render-fetch-movies-card';
 import axios from 'axios';
 
-const libraryFetchEl = document.querySelector('.gallery');
+const libraryFetchEl = document.querySelector('.gallery_fetch-box');
 const librarySearchEl = document.querySelector('.gallery_search-box');
 
 const paginationItemsFetchContainer = document.querySelector(
