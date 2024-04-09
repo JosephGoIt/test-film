@@ -1,6 +1,6 @@
 import { findGenresOfMovie } from './find-genre';
 import img from '../images/foto.jpg';
-const libraryFetchEl = document.querySelector('.gallery_fetch-box');
+const libraryFetchEl = document.querySelector('.gallery');
 
 export { renderFetchMoviesCard };
 
